@@ -1,0 +1,19 @@
+#header {
+    background-color: #1d1d1d;
+    color: #ffffff;
+    padding: 15px;
+}
+
+#header h3 {
+    color: #ffffff;
+}
+
+#content {
+    padding: 15px;
+}
+
+#footer {
+    background-color: #1d1d1d;
+    color: #ffffff;
+    padding: 15px;
+}
