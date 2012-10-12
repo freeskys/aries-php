@@ -4,5 +4,10 @@ When you use Aries Framework your js and css is loaded automatically.
 
 I Hope you enjoy using Aries Framework for PHP.
 
+Version 1.0.1
++ Update jQuery from 1.7.2 to 1.8.0
+- Remove bootstrap Framework
+* Fixed several bugs
+
 Version 1.0
 + First file upload

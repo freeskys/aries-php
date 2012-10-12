@@ -15,7 +15,6 @@ abstract class Controller {
         //Membuka file untuk dibaca
         $path       = realpath(VIEWS_DIR.'/'.$file.'.php');
         $file_open  = fopen($path, 'r');
-        $text       = fread($file_open, filesize($path));
 
         //Menutup file
         fclose($file_open);
@@ -33,21 +32,21 @@ abstract class Controller {
         }
         $head .= '</head><body>';
 
-        $text = $head.$text;
-
-        //Mengisi isi variabel
-        //TODO : Template engine
+        //Template Engine
+        ob_start();
         if (isset($data)) {
-            foreach ($data as $key => $value) {
-                $text = str_replace('{{'.$key.'}}', $value, $text);
-            }
+            extract($data);
         }
+        require_once($path);
+        $text = $head.ob_get_clean();
+
+        $text .= '</body></html>';
+
+        return $text;
 
         //TODO: Mengkompress isi file
         //$text = str_replace('  ', ' ', $text);
         //$text = str_replace('\n', ' ', $text);
-
-        return $text.='</body></html>';
     }
 
 }

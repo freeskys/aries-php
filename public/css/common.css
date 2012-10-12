@@ -12,6 +12,11 @@
     padding: 15px;
 }
 
+.code {
+	background-color: #d1d1d1;
+	padding: 5px;
+}
+
 #footer {
     background-color: #1d1d1d;
     color: #ffffff;

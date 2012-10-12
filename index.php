@@ -1,5 +1,7 @@
 <?php
 
+use Lib\Controller as Controller;
+
 //Mengeset apakaah menampilkan pesan error
 error_reporting(-1);
 ini_set('display_errors', 1);
@@ -23,6 +25,6 @@ function __autoload($classname) {
 $router     = new \Lib\Router();
 
 //Memanggil controller
-$router->route();
+$result = $router->route();
 
 ?>
