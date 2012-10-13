@@ -12,7 +12,7 @@ define('MODELS_DIR', realpath(__DIR__.'/app/controllers').DIRECTORY_SEPARATOR);
 define('VIEWS_DIR', realpath(__DIR__.'/app/views').DIRECTORY_SEPARATOR);
 define('LIB_DIR', realpath(__DIR__.'/lib').DIRECTORY_SEPARATOR);
 define('CSS_DIR', (__DIR__.'/public/css').DIRECTORY_SEPARATOR);
-define('IMG_DIR', realpath(__DIR__.'/public/img').DIRECTORY_SEPARATOR);
+define('IMG_DIR', \Lib\Config::getConfig('base').'public/img'.DIRECTORY_SEPARATOR);
 define('JS_DIR', (__DIR__.'/public/js').DIRECTORY_SEPARATOR);
 
 //Meload class - class yang dibutuhkan

@@ -35,6 +35,7 @@ abstract class Controller {
         //Template Engine
         ob_start();
         if (isset($data)) {
+            $data['imgDir'] = IMG_DIR;
             extract($data);
         }
         require_once($path);
