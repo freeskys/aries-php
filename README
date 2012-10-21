@@ -1,8 +1,15 @@
-Aries Framework for PHP is a Microframework to create MVC based website in PHP.
-It's small, and fast.
-When you use Aries Framework your js and css is loaded automatically.
+AriesPHP
+========
 
-I Hope you enjoy using Aries Framework for PHP.
+AriesPHP is a Microframework to create MVC based website in PHP.
+AriesPHP designed to be fast, secure, and easy. We work hard to make
+AriesPHP as easy as we can, so everyone can make website without pain.
+
+Thank you for all contributors. Without your help AriesPHP can't be like this.
+
+##Contributors
+- [Mohammad Andy Nugroho](https://twitter.com/androvnugros)
+- [Moh. Nuruddin Ef.](https://twitter.com/uudshan)
 
 Version 1.0.2
 * Fixed several bugs
@@ -15,4 +22,4 @@ Version 1.0.1
 Version 1.0
 + First file upload
 
-Aries Micro Framework for PHP is under MIT LICENSE.
+AriesPHP is released under MIT LICENSE.

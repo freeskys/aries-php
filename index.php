@@ -1,5 +1,4 @@
 <?php
-
 use Lib\Controller as Controller;
 
 //Mengeset apakaah menampilkan pesan error
@@ -22,9 +21,13 @@ function __autoload($classname) {
 }
 
 //Menjalankan router
-$router     = new \Lib\Router();
+$router = new \Lib\Router();
 
+//Memanggil caches header
+$router->headerCache();
 //Memanggil controller
-$result = $router->route();
+$router->route();
+//Memanggil caches footer
+$router->footerCache();
 
 ?>

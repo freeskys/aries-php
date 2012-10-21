@@ -13,9 +13,9 @@ class Config {
 
     public static $config = array(
         //Konfigurasi website
-        'title'         => 'Aries Framework',
-        'keyword'       => 'aries, framework',
-        'description'   => 'Aries framework is a PHP microframework.',
+        'title'         => 'AriesPHP',
+        'keyword'       => 'aries, framework, ariesphp',
+        'description'   => 'AriesPHP is a MVC framework without the PAIN.',
 
         //Base URL
         'base'          => 'http://localhost/aries/',

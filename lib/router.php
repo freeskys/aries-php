@@ -11,7 +11,7 @@ namespace Lib;
 
 class Router {
 
-    public $controller, $action, $value;
+    private $controller, $action, $value, $cacheFile;
 
     public function __construct() {
         Autoloader::init();
@@ -33,6 +33,27 @@ class Router {
         } else {
             echo call_user_func('App\Controllers\c_not_found::index');
         }
+    }
+
+    public function headerCache() {
+        $file = $this->controller.'-'.$this->action;
+        $this->cacheFile = 'app\caches\cached'.$file.'.html';
+        $cacheTime = 18.000;
+
+        //Muat caches jika umurnya lebih muda dari $cacheTime
+        if (file_exists($this->cacheFile) && time() - $cacheTime < filemtime($this->cacheFile)) {
+            echo "<!-- Cached copy, generated ".date('H:i', filemtime($this->cacheFile))." -->\n";
+            include($this->cacheFile);
+            exit;
+        }
+        ob_start();
+    }
+
+    public function footerCache() {
+        $cached = fopen($this->cacheFile, 'w');
+        fwrite($cached, ob_get_contents());
+        fclose($cached);
+        ob_end_flush();
     }
 
 }

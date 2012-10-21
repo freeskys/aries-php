@@ -9,8 +9,8 @@ class C_Home extends Controller {
 
     public static function index() {
         $data = array(
-            'hello' => M_Home::get_data().'  World!',
-            'features' => array('Lightweight', 'Fast', 'Small'),
+            'horay' => 'Horrraaayyyy!!!',
+            'features' => M_Home::get_data(),
         );
         return Controller::view('home/v_index', $data);
     }
