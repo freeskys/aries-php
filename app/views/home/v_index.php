@@ -9,7 +9,9 @@
 <div class="container_12 gradient_black" style="width:100%;">
     <div class="container_12">
         <div class="grid_12" id="header">
-            <h3>AriesPHP</h3>
+            <h3>
+                <img src="<?= IMG_DIR ?>logo-aries.png" alt="Logo"/>
+            </h3>
         </div>
     </div>
 </div>
@@ -57,6 +59,7 @@
         <div class="grid_4 footer_item">
             <h3>Developer</h3>
             <a href="https://twitter.com/freeskys">@freeskys</a> - Project Manager and Lead Developer
+            <a href="https://twitter.com/androvnugros">@androvnugros</a> - Graphic Designer
         </div>
         <div class="grid_4 footer_item">
             <h3>Framework included in Aries</h3>
