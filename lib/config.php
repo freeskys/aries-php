@@ -21,6 +21,8 @@ class Config {
         'base'          => 'http://localhost/aries/',
         //File index awal. Tulis nama controller tanpa mengikutkan "c_"
         'index'         => 'home',
+        //Compress HTML text to reduce browser load and save bandwidth. Set it true or false
+        'htmlCompress'  => 'true',
     );
 
     public static function getConfig($key) {
