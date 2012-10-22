@@ -24,6 +24,7 @@ abstract class Controller {
         $js = glob('public/js/*.js');
 
         $head = '<html><head><title>'.Config::getConfig('title').'</title>';
+        $head .= '<link rel="author" href="humans.txt" />';
         foreach ($css as $value) {
             $head .= '<link href="'.Config::getConfig('base').$value.'" type="text/css" rel="Stylesheet"/>';
         }
