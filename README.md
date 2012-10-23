@@ -12,12 +12,6 @@ Thank you for all contributors. Without your help AriesPHP can't be like this.
 - [Moh. Nuruddin Ef.](https://twitter.com/uudshan)
 
 ##Version History
-Version 1.0.5
-+ Added robots.txt
-+ Added humans.txt
-+ Added 1140 Minibox System
-- Remove 960 Grid System
-
 Version 1.0.4
 + Added cache system
 + New welcome page
