@@ -11,10 +11,9 @@ Thank you for all contributors. Without your help AriesPHP can't be like this.
 - [Mohammad Andy Nugroho](https://twitter.com/androvnugros)
 - [Moh. Nuruddin Ef.](https://twitter.com/uudshan)
 
-Version 1.0.5
+Version 1.0.4
 + Added cache system
 + New welcome page
-+ Added Gemini CSS
 + Added HTML compress option on config
 + Added Logo
 
