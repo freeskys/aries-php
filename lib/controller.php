@@ -4,13 +4,22 @@
  * Twitter	: @freeskys
  *
  * You may change code below but PLEASE DO NOT REMOVE THIS COMMENT.
- * Thanks for using ARIES FRAMEWORK for PHP
+ * Thanks for using AriesPHP
  *****************************************************************/
 
 namespace Lib;
 
+use Lib\Vendor\Mobile_Detect as Agent;
+
 abstract class Controller {
 
+    /**
+     * Write the view to the browser window.
+     *
+     * @param $file
+     * @param null $data
+     * @return mixed|string
+     */
     public static function view($file, $data = null) {
         //Membuka file untuk dibaca
         $path       = realpath(VIEWS_DIR.'/'.$file.'.php');
@@ -25,8 +34,10 @@ abstract class Controller {
 
         $head = '<html><head><title>'.Config::getConfig('title').'</title>';
         $head .= '<link rel="author" href="humans.txt" />';
+        $head .= '<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">';
+        $head .= '<meta http-equiv="Content-type" content="text/html; charset=utf-8">';
         foreach ($css as $value) {
-            $head .= '<link href="'.Config::getConfig('base').$value.'" type="text/css" rel="Stylesheet"/>';
+            $head .= '<link href="'.Config::getConfig('base').$value.'" type="text/css" rel="stylesheet"/>';
         }
         foreach ($js as $value) {
             $head .= '<script src="'.Config::getConfig('base').$value.'" type="text/javascript"></script>';
@@ -70,6 +81,36 @@ abstract class Controller {
             }
         }
         return $html;
+    }
+
+    /**
+     * Check if browser is desktop or not.
+     *
+     * @return bool
+     */
+    public static function isDesktop() {
+        $agent = new Agent();
+        return (!$agent->isTablet() && !$agent->isMobile());
+    }
+
+    /**
+     * Check if browser is tablet or not.
+     *
+     * @return bool
+     */
+    public static function isTablet() {
+        $agent = new Agent();
+        return $agent->isTablet();
+    }
+
+    /**
+     * Check if browser is mobile or not.
+     *
+     * @return bool
+     */
+    public static function isMobile() {
+        $agent = new Agent();
+        return $agent->isTablet();
     }
 
 }

@@ -36,7 +36,6 @@
             <h3>Framework included in Aries</h3>
             <a href="http://960.gs/" target="_blank">960 Grid System</a> by Nathan Smith<br />
             <a href="http://jquery.com/" target="_blank">jQuery</a> by The jQuery Foundation<br />
-            <a href="http://underscorejs.org/" target="_blank">Underscore JS</a> by DocumentCloud Inc<br />
         </div>
     </div>
 </div>

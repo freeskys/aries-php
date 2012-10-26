@@ -6,6 +6,7 @@ The humans responsible & technology colophon */
 
 /* THANKS */
     Mohammad Andy Nugroho -- @androvnugros
+	Moh. Nuruddin Ef. -- @uudshan
 
 /* TECHNOLOGY COLOPHON */
     jQuery, 960 Grid CSS,

@@ -12,6 +12,13 @@ Thank you for all contributors. Without your help AriesPHP can't be like this.
 - [Moh. Nuruddin Ef.](https://twitter.com/uudshan)
 
 ##Version History
+Version 1.0.5
++ Added AriesPHP ORM (ALPHA)
++ Added robots.txt
++ Added humans.txt
++ Added 1140 Minibox System
+- Remove 960 Grid System
+
 Version 1.0.4
 + Added cache system
 + New welcome page
@@ -20,14 +27,6 @@ Version 1.0.4
 
 Version 1.0.2
 * Fixed several bugs
-
-Version 1.0.1
-+ Update jQuery from 1.7.2 to 1.8.0
-- Remove bootstrap Framework
-* Fixed several bugs
-
-Version 1.0
-+ First file upload
 
 ##License
 Copyright (C) 2012 Harditya Rahmat Ramadhan

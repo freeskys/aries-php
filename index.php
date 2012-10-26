@@ -1,5 +1,5 @@
 <?php
-use Lib\Controller as Controller;
+use Lib\Config as Config;
 
 //Mengeset apakaah menampilkan pesan error
 error_reporting(-1);
@@ -24,10 +24,13 @@ function __autoload($classname) {
 $router = new \Lib\Router();
 
 //Memanggil caches header
-$router->headerCache();
+if (Config::getConfig('cache') == 'true') {
+    $router->headerCache();
+}
 //Memanggil controller
 $router->route();
 //Memanggil caches footer
-$router->footerCache();
-
+if (Config::getConfig('cache') == 'true') {
+    $router->footerCache();
+}
 ?>

@@ -4,7 +4,7 @@
  * Twitter	: @freeskys
  *
  * You may change code below but PLEASE DO NOT REMOVE THIS COMMENT.
- * Thanks for using ARIES FRAMEWORK for PHP
+ * Thanks for using AriesPHP
  *****************************************************************/
 
 namespace Lib;
@@ -38,7 +38,7 @@ class Router {
     public function headerCache() {
         $file = $this->controller.'-'.$this->action;
         $this->cacheFile = 'app\caches\cached'.$file.'.html';
-        $cacheTime = 18.000;
+        $cacheTime = 18000;
 
         //Muat caches jika umurnya lebih muda dari $cacheTime
         if (file_exists($this->cacheFile) && time() - $cacheTime < filemtime($this->cacheFile)) {

@@ -4,7 +4,7 @@
  * Twitter	: @freeskys
  *
  * You may change code below but PLEASE DO NOT REMOVE THIS COMMENT.
- * Thanks for using ARIES FRAMEWORK for PHP
+ * Thanks for using AriesPHP
  *****************************************************************/
 
 namespace Lib;
@@ -12,7 +12,7 @@ namespace Lib;
 class Config {
 
     public static $config = array(
-        //Konfigurasi website
+        //Website configuration
         'title'         => 'AriesPHP',
         'keyword'       => 'aries, framework, ariesphp',
         'description'   => 'AriesPHP is a MVC framework without the PAIN.',
@@ -23,6 +23,15 @@ class Config {
         'index'         => 'home',
         //Compress HTML text to reduce browser load and save bandwidth. Set it true or false
         'htmlCompress'  => 'true',
+        //Active cache or not
+        'cache'         => 'false',
+
+        //Database configuration
+        'host'          => 'localhost',
+        'port'          => '3306',
+        'databaseName'  => 'aries',
+        'user'          => 'root',
+        'password'      => '',
     );
 
     public static function getConfig($key) {
