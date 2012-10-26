@@ -20,9 +20,6 @@
             <span class="hello"><?= $horay; ?>.</span><br />
             You've successfully installed AriesPHP.<br />
             Welcome to the MVC world minus the PAIN.
-            This is <?php while ($row = $features->fetch()) {
-                echo $row['name'].'<br />';
-        } ?>
         </h3>
     </div>
     <div class="grid_6">
