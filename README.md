@@ -12,12 +12,14 @@ Thank you for all contributors. Without your help AriesPHP can't be like this.
 - [Moh. Nuruddin Ef.](https://twitter.com/uudshan)
 
 ##Version History
-Version 1.0.5
-+ Added AriesPHP ORM (ALPHA)
+Version 1.0.7 (Beta)
++ Added LessCSS Compiler (Using Less Compiler by @moonscript)
++ Added BETA ORM
 + Added robots.txt
 + Added humans.txt
 + Added 1140 Minibox System
 - Remove 960 Grid System
+* Fixed several bugs
 
 Version 1.0.4
 + Added cache system

@@ -24,7 +24,7 @@ class Config {
         //Compress HTML text to reduce browser load and save bandwidth. Set it true or false
         'htmlCompress'  => 'true',
         //Active cache or not
-        'cache'         => 'false',
+        'cache'         => 'true',
 
         //Database configuration
         'host'          => 'localhost',

@@ -37,7 +37,7 @@ class Router {
 
     public function headerCache() {
         $file = $this->controller.'-'.$this->action;
-        $this->cacheFile = 'app\caches\cached'.$file.'.html';
+        $this->cacheFile = 'app\caches\cached-'.$file.'.html';
         $cacheTime = 18000;
 
         //Muat caches jika umurnya lebih muda dari $cacheTime

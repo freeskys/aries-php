@@ -28,8 +28,7 @@ class Model {
 
             $this->db = new \PDO("mysql:host=$host;dbname=$dbName", $user, $password);
         } catch (\PDOException $ex) {
-            //@TODO : Show error Message
-            echo $ex->getMessage();
+            echo 'AriesPHP can\'t connect to database. Please check your database connection.';
         }
     }
 

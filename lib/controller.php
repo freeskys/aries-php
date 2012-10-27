@@ -21,14 +21,21 @@ abstract class Controller {
      * @return mixed|string
      */
     public static function view($file, $data = null) {
-        //Membuka file untuk dibaca
+        //Open file to read
         $path       = realpath(VIEWS_DIR.'/'.$file.'.php');
-        $file_open  = fopen($path, 'r');
+        $file_open  = null;
+        //Show error when can't find the file
+        try {
+            $file_open  = fopen($path, 'r');
+        } catch (\Exception $ex) {
+            echo 'We can\'t find view with name '.$file.'.php';
+        }
 
-        //Menutup file
-        fclose($file_open);
+        //Close file
+        if (!empty($file_open))
+            fclose($file_open);
 
-        //Menambahkan head ke view
+        //Add head to view
         $css = glob('public/css/*.css');
         $js = glob('public/js/*.js');
 
@@ -36,6 +43,8 @@ abstract class Controller {
         $head .= '<link rel="author" href="humans.txt" />';
         $head .= '<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">';
         $head .= '<meta http-equiv="Content-type" content="text/html; charset=utf-8">';
+        $head .= '<meta name="description" value="'.Config::getConfig('description').'">';
+        $head .= '<meta name="keyword" value="'.Config::getConfig('keyword').'">';
         foreach ($css as $value) {
             $head .= '<link href="'.Config::getConfig('base').$value.'" type="text/css" rel="stylesheet"/>';
         }
@@ -44,7 +53,7 @@ abstract class Controller {
         }
         $head .= '</head><body>';
 
-        //Template Engine
+        //Add data to view
         ob_start();
         if (isset($data)) {
             $data['imgDir'] = IMG_DIR;
@@ -55,6 +64,7 @@ abstract class Controller {
 
         $text .= '</body></html>';
 
+        //Compressing html page before send it to browser
         if (Config::getConfig('htmlCompress') == 'true') {
             return Controller::htmlCompressor($text);
         } else {
