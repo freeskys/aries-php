@@ -32,6 +32,9 @@ class Config {
         'databaseName'  => 'aries',
         'user'          => 'root',
         'password'      => '',
+		
+		//AriesLogin configuration
+        'salt'          => 'LAKSJD*(@U9hsaD',
     );
 
     public static function getConfig($key) {

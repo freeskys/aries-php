@@ -11,7 +11,123 @@ namespace Lib;
 
 use Lib\Vendor\Mobile_Detect as Agent;
 
-abstract class Controller {
+class Controller {
+
+    /**
+     * @var HTML docType
+     */
+    var $docType = '<!DOCTYPE HTML>';
+    /**
+     * @var Path of the view
+     */
+    var $path;
+    /**
+     * @var View file extension
+     */
+    var $extension = 'php';
+    /**
+     * @var Controller Result
+     */
+    var $result;
+
+    /**
+     * Generating view file.
+     *
+     * @param $file
+     * @param null $data
+     */
+    public function __construct($file, $data = null) {
+        //@TODO:Do something before view load (Before Method)
+
+        //Set path to the view file
+        $this->path = realpath(VIEWS_DIR.'/'.$file.'.'.$this->extension);
+        //Create header
+        $head = $this->headerBuilder();
+        //Extracting the data
+        ob_start();
+        $data['base'] = Config::getConfig('base');
+        extract($data);
+        require_once($this->path);
+        $text = $head.ob_get_clean();
+        //Create footer
+        $text .= $this->footerBuilder();
+        //@TODO: Do something after view load (After method)
+
+        //Compressing html page before send it to browser
+        if (Config::getConfig('htmlCompress') == 'true') {
+            //return Controller::htmlCompressor($text);
+            $this->result = Controller::htmlCompressor($text);
+        } else {
+            $this->result = $text;
+        }
+    }
+
+    /**
+     * Generating header for the view.
+     *
+     * @return string
+     */
+    public function headerBuilder() {
+        $head = $this->docType;
+        $head .= '<html><head><title>'.Config::getConfig('title').'</title>';
+        $head .= $this->metaBuilder();
+        $head .= '<link rel="author" href="humans.txt" />';
+        $head .= $this->cssBuilder();
+        $head .= $this->jsBuilder();
+        $head .= '</head><body>';
+        return $head;
+    }
+
+    /**
+     * Generating meta for the header.
+     *
+     * @return string
+     */
+    public function metaBuilder() {
+        $meta = '<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">';
+        $meta .= '<meta http-equiv="Content-type" content="text/html; charset=utf-8">';
+        $meta .= '<meta name="description" value="'.Config::getConfig('description').'">';
+        $meta .= '<meta name="keyword" value="'.Config::getConfig('keyword').'">';
+        return $meta;
+    }
+
+    /**
+     * Generating css for the header.
+     *
+     * @return null|string
+     */
+    public function cssBuilder() {
+        $css = glob('public/css/*.css');
+        $result = null;
+        foreach ($css as $value) {
+            $result .= '<link href="'.Config::getConfig('base').$value.'" type="text/css" rel="stylesheet"/>';
+        }
+        return $result;
+    }
+
+    /**
+     * Generating js for the header.
+     *
+     * @return null|string
+     */
+    public function jsBuilder() {
+        $js = glob('public/js/*.js');
+        $result = null;
+        foreach ($js as $value) {
+            $result .= '<script src="'.Config::getConfig('base').$value.'" type="text/javascript"></script>';
+        }
+        return $result;
+    }
+
+    /**
+     * Generating footer for the view.
+     *
+     * @return string
+     */
+    public function footerBuilder() {
+        $footer = '</body></html>';
+        return $footer;
+    }
 
     /**
      * Write the view to the browser window.
@@ -21,55 +137,8 @@ abstract class Controller {
      * @return mixed|string
      */
     public static function view($file, $data = null) {
-        //Open file to read
-        $path       = realpath(VIEWS_DIR.'/'.$file.'.php');
-        $file_open  = null;
-        //Show error when can't find the file
-        try {
-            $file_open  = fopen($path, 'r');
-        } catch (\Exception $ex) {
-            echo 'We can\'t find view with name '.$file.'.php';
-        }
-
-        //Close file
-        if (!empty($file_open))
-            fclose($file_open);
-
-        //Add head to view
-        $css = glob('public/css/*.css');
-        $js = glob('public/js/*.js');
-
-        $head = '<html><head><title>'.Config::getConfig('title').'</title>';
-        $head .= '<link rel="author" href="humans.txt" />';
-        $head .= '<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">';
-        $head .= '<meta http-equiv="Content-type" content="text/html; charset=utf-8">';
-        $head .= '<meta name="description" value="'.Config::getConfig('description').'">';
-        $head .= '<meta name="keyword" value="'.Config::getConfig('keyword').'">';
-        foreach ($css as $value) {
-            $head .= '<link href="'.Config::getConfig('base').$value.'" type="text/css" rel="stylesheet"/>';
-        }
-        foreach ($js as $value) {
-            $head .= '<script src="'.Config::getConfig('base').$value.'" type="text/javascript"></script>';
-        }
-        $head .= '</head><body>';
-
-        //Add data to view
-        ob_start();
-        if (isset($data)) {
-            $data['imgDir'] = IMG_DIR;
-            extract($data);
-        }
-        require_once($path);
-        $text = $head.ob_get_clean();
-
-        $text .= '</body></html>';
-
-        //Compressing html page before send it to browser
-        if (Config::getConfig('htmlCompress') == 'true') {
-            return Controller::htmlCompressor($text);
-        } else {
-            return $text;
-        }
+        $controller = new Controller($file, $data);
+        return $controller->result;
     }
 
     /**
@@ -91,6 +160,15 @@ abstract class Controller {
             }
         }
         return $html;
+    }
+
+    /**
+     * Getting base URL.
+     *
+     * @return mixed
+     */
+    public static function getBaseUrl() {
+        return Config::getConfig('base');
     }
 
     /**

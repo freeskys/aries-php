@@ -1,6 +1,13 @@
 <?php
-use Lib\Config as Config;
+use \Lib\Config as Config;
 require_once('lib/vendor/lessc.php');
+
+//Load all required class
+spl_autoload_register(function ($classname) {
+    $filename = $classname.'.php';
+    if (file_exists($filename))
+        require_once($filename);
+});
 
 //Show error or not
 error_reporting(-1);
@@ -12,15 +19,9 @@ define('MODELS_DIR', realpath(__DIR__.'/app/controllers').DIRECTORY_SEPARATOR);
 define('VIEWS_DIR', realpath(__DIR__.'/app/views').DIRECTORY_SEPARATOR);
 define('LIB_DIR', realpath(__DIR__.'/lib').DIRECTORY_SEPARATOR);
 define('CSS_DIR', (__DIR__.'/public/css').DIRECTORY_SEPARATOR);
-define('IMG_DIR', \Lib\Config::getConfig('base').'public/img'.DIRECTORY_SEPARATOR);
+define('IMG_DIR', Config::getConfig('base').'public/img/');
 define('JS_DIR', (__DIR__.'/public/js').DIRECTORY_SEPARATOR);
 define('LESS_DIR', realpath(__DIR__.'/public/less').DIRECTORY_SEPARATOR);
-
-//Load all required class
-function __autoload($classname) {
-    $classname = str_replace('\\', '/', $classname) . '.php';
-    require_once($classname);
-}
 
 //Running the router
 $router = new \Lib\Router();

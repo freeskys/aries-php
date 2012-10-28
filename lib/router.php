@@ -11,21 +11,40 @@ namespace Lib;
 
 class Router {
 
-    private $controller, $action, $value, $cacheFile;
+    /**
+     * @var Controller to be called
+     */
+    private $controller;
+    /**
+     * @var Action to be called
+     */
+    private $action;
+    /**
+     * @var Value passed to action
+     */
+    private $value;
+    /**
+     * @var Cache filename
+     */
+    private $cacheFile;
 
+    /**
+     * Setting the variable to process.
+     */
     public function __construct() {
-        Autoloader::init();
-
         //Mendapatkan request halaman
         $request    = isset($_GET['request']) ? $_GET['request'] : null;
         $split      = explode('/', trim($request, '/'));
-
         //Memasukkan data ke dalam variabel
         $this->controller   = !empty($split[0]) ? filter_var(strtolower($split[0]), FILTER_SANITIZE_STRING) : Config::getConfig('index');
         $this->action       = !empty($split[1]) ? filter_var(strtolower($split[1]), FILTER_SANITIZE_STRING) : 'index';
+        //@TODO : Filter URL input
         $this->value        = !empty($split[2]) ? strtolower($split[2]) : null;
     }
 
+    /**
+     * Call the requested controller
+     */
     public function route() {
         //Memanggil controller
         if (is_callable('App\Controllers\c_'.$this->controller.'::'.$this->action)) {
@@ -35,6 +54,9 @@ class Router {
         }
     }
 
+    /**
+     * Make cache
+     */
     public function headerCache() {
         $file = $this->controller.'-'.$this->action;
         $this->cacheFile = 'app\caches\cached-'.$file.'.html';
@@ -49,6 +71,9 @@ class Router {
         ob_start();
     }
 
+    /**
+     * Make cache
+     */
     public function footerCache() {
         $cached = fopen($this->cacheFile, 'w');
         fwrite($cached, ob_get_contents());

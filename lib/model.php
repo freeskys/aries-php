@@ -39,6 +39,10 @@ class Model {
         $this->db = null;
     }
 
+    public function getDb() {
+        return $this->db;
+    }
+
     /**
      * Get all data from the table.
      *
