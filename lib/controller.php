@@ -9,25 +9,32 @@
 
 namespace Lib;
 
-use Lib\Vendor\Mobile_Detect as Agent;
+class Controller extends Utilities {
 
-class Controller {
-
-    /**
-     * @var HTML docType
-     */
-    var $docType = '<!DOCTYPE HTML>';
-    /**
-     * @var Path of the view
-     */
+    //==== View Setting ====
     var $path;
-    /**
-     * @var View file extension
-     */
-    var $extension = 'php';
-    /**
-     * @var Controller Result
-     */
+    var $view_extension = 'php';
+
+    //==== Template Setting ====
+    var $template_name = 'template';
+    var $template_ext = 'php';
+
+    //==== Language Setting ====
+    var $language_folder = 'app/languages/';
+    var $language_ext = 'php';
+
+    //==== Reserved variable for view ====
+    var $base_url = 'base';
+    var $current_year = 'current_year';
+    var $css = 'css';
+    var $js = 'js';
+    var $content = 'content';
+
+    //==== Other Setting ====
+    var $css_folder = 'public/css/';
+    var $js_folder = 'public/js/';
+
+    //Result send to browser
     var $result;
 
     /**
@@ -35,27 +42,43 @@ class Controller {
      *
      * @param $file
      * @param null $data
+     * @param null $language
      */
-    public function __construct($file, $data = null) {
-        //@TODO:Do something before view load (Before Method)
-
+    public function __construct($file, $data = null, $language = null) {
         //Set path to the view file
-        $this->path = realpath(VIEWS_DIR.'/'.$file.'.'.$this->extension);
-        //Create header
-        $head = $this->headerBuilder();
-        //Extracting the data
+        $this->path = realpath(VIEWS_DIR.DIRECTORY_SEPARATOR.$file.'.'.$this->view_extension);
+
+        //Extracting data to content
+        $content = '';
         ob_start();
-        $data['base'] = Config::getConfig('base');
+
+        //Get language file.
+        if (null == $language)
+            include_once ($this->language_folder.Config::getConfig(Config::$lang).'.'.$this->language_ext);
+        else
+            include_once ($this->language_folder.$language.'.'.$this->language_ext);
+
+        //Sent data to view
+        $data[$this->base_url] = Config::getConfig(Config::$base);
+        $data[$this->current_year] = Controller::getCurrentYear();
         extract($data);
+        extract($lang);
         require_once($this->path);
-        $text = $head.ob_get_clean();
-        //Create footer
-        $text .= $this->footerBuilder();
-        //@TODO: Do something after view load (After method)
+        $content .= ob_get_clean();
+
+        //Extracting the data to template
+        ob_start();
+        $t[$this->css] = Controller::cssBuilder();
+        $t[$this->js] = Controller::jsBuilder();
+        $t[$this->content] = $content;
+        extract($data);
+        extract($lang);
+        extract($t);
+        require_once(realpath(VIEWS_DIR.DIRECTORY_SEPARATOR.$this->template_name.'.'.$this->template_ext));
+        $text = ob_get_clean();
 
         //Compressing html page before send it to browser
-        if (Config::getConfig('htmlCompress') == 'true') {
-            //return Controller::htmlCompressor($text);
+        if (Config::getConfig(Config::$htmlCompress) == 'true') {
             $this->result = Controller::htmlCompressor($text);
         } else {
             $this->result = $text;
@@ -63,32 +86,12 @@ class Controller {
     }
 
     /**
-     * Generating header for the view.
+     * Get all languages files.
      *
-     * @return string
+     * @return array
      */
-    public function headerBuilder() {
-        $head = $this->docType;
-        $head .= '<html><head><title>'.Config::getConfig('title').'</title>';
-        $head .= $this->metaBuilder();
-        $head .= '<link rel="author" href="humans.txt" />';
-        $head .= $this->cssBuilder();
-        $head .= $this->jsBuilder();
-        $head .= '</head><body>';
-        return $head;
-    }
-
-    /**
-     * Generating meta for the header.
-     *
-     * @return string
-     */
-    public function metaBuilder() {
-        $meta = '<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, width=device-width">';
-        $meta .= '<meta http-equiv="Content-type" content="text/html; charset=utf-8">';
-        $meta .= '<meta name="description" value="'.Config::getConfig('description').'">';
-        $meta .= '<meta name="keyword" value="'.Config::getConfig('keyword').'">';
-        return $meta;
+    public function getLanguages() {
+        return glob($this->language_folder.'*.'.$this->language_ext);
     }
 
     /**
@@ -97,10 +100,10 @@ class Controller {
      * @return null|string
      */
     public function cssBuilder() {
-        $css = glob('public/css/*.css');
+        $css = glob($this->css_folder.'*.css');
         $result = null;
         foreach ($css as $value) {
-            $result .= '<link href="'.Config::getConfig('base').$value.'" type="text/css" rel="stylesheet"/>';
+            $result .= '<link href="'.Config::getConfig(Config::$base).$value.'" type="text/css" rel="stylesheet"/>';
         }
         return $result;
     }
@@ -111,22 +114,12 @@ class Controller {
      * @return null|string
      */
     public function jsBuilder() {
-        $js = glob('public/js/*.js');
+        $js = glob($this->js_folder.'*.js');
         $result = null;
         foreach ($js as $value) {
-            $result .= '<script src="'.Config::getConfig('base').$value.'" type="text/javascript"></script>';
+            $result .= '<script src="'.Config::getConfig(Config::$base).$value.'" type="text/javascript"></script>';
         }
         return $result;
-    }
-
-    /**
-     * Generating footer for the view.
-     *
-     * @return string
-     */
-    public function footerBuilder() {
-        $footer = '</body></html>';
-        return $footer;
     }
 
     /**
@@ -134,11 +127,21 @@ class Controller {
      *
      * @param $file
      * @param null $data
-     * @return mixed|string
+     * @param null $language
+     * @return Controller|mixed|string
      */
-    public static function view($file, $data = null) {
-        $controller = new Controller($file, $data);
+    public static function view($file, $data = null, $language = null) {
+        $controller = new Controller($file, $data, $language);
         return $controller->result;
+    }
+
+    /**
+     * Set language for the view.
+     *
+     * @param $language
+     */
+    public static function setLanguage($language) {
+        Config::setConfig(Config::$lang, $language);
     }
 
     /**
@@ -160,45 +163,6 @@ class Controller {
             }
         }
         return $html;
-    }
-
-    /**
-     * Getting base URL.
-     *
-     * @return mixed
-     */
-    public static function getBaseUrl() {
-        return Config::getConfig('base');
-    }
-
-    /**
-     * Check if browser is desktop or not.
-     *
-     * @return bool
-     */
-    public static function isDesktop() {
-        $agent = new Agent();
-        return (!$agent->isTablet() && !$agent->isMobile());
-    }
-
-    /**
-     * Check if browser is tablet or not.
-     *
-     * @return bool
-     */
-    public static function isTablet() {
-        $agent = new Agent();
-        return $agent->isTablet();
-    }
-
-    /**
-     * Check if browser is mobile or not.
-     *
-     * @return bool
-     */
-    public static function isMobile() {
-        $agent = new Agent();
-        return $agent->isTablet();
     }
 
 }

@@ -14,9 +14,11 @@ error_reporting(-1);
 ini_set('display_errors', 1);
 
 //Initializing folder
+define('BACKUP_DIR', realpath(__DIR__.'/app/backup').DIRECTORY_SEPARATOR);
 define('CONTROLLERS_DIR', realpath(__DIR__.'/app/controllers').DIRECTORY_SEPARATOR);
-define('MODELS_DIR', realpath(__DIR__.'/app/controllers').DIRECTORY_SEPARATOR);
+define('MODELS_DIR', realpath(__DIR__.'/app/models').DIRECTORY_SEPARATOR);
 define('VIEWS_DIR', realpath(__DIR__.'/app/views').DIRECTORY_SEPARATOR);
+define('LANGUAGES_DIR', realpath(__DIR__.'/app/languages').DIRECTORY_SEPARATOR);
 define('LIB_DIR', realpath(__DIR__.'/lib').DIRECTORY_SEPARATOR);
 define('CSS_DIR', (__DIR__.'/public/css').DIRECTORY_SEPARATOR);
 define('IMG_DIR', Config::getConfig('base').'public/img/');
@@ -26,14 +28,16 @@ define('LESS_DIR', realpath(__DIR__.'/public/less').DIRECTORY_SEPARATOR);
 //Running the router
 $router = new \Lib\Router();
 
-//Compiling LessCSS
-$lessFile = glob('public/less/*.less');
-if (sizeof($lessFile) > 0) {
-    $less = new lessc;
-    foreach ($lessFile as $value) {
-        $filenames = explode('/', $value);
-        $filename = $filenames[2];
-        $less->checkedCompile($value, strstr($value, '/', true).'/css/'.substr($filename, 0, strpos($filename, '.')).'.css');
+//Compiling dynamic stylesheet
+if (Config::getPlugins('css') == 'lessCSS') {
+    $lessFile = glob('public/less/*.less');
+    if (sizeof($lessFile) > 0) {
+        $less = new lessc;
+        foreach ($lessFile as $value) {
+            $filenames = explode('/', $value);
+            $filename = $filenames[2];
+            $less->checkedCompile($value, strstr($value, '/', true).'/css/'.substr($filename, 0, strpos($filename, '.')).'.css');
+        }
     }
 }
 
@@ -41,8 +45,10 @@ if (sizeof($lessFile) > 0) {
 if (Config::getConfig('cache') == 'true') {
     $router->headerCache();
 }
+
 //Call controller
 $router->route();
+
 //Call caches footer
 if (Config::getConfig('cache') == 'true') {
     $router->footerCache();

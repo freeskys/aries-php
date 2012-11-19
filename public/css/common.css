@@ -18,12 +18,25 @@ a {
     -webkit-border-radius: 10px;
 }
 
-#header {
+.header {
     color: #ffffff;
     padding: 10px 10px 0 10px;
 }
 
-#header h3 {
+.language {
+    color: #ffffff;
+    padding: 48px 10px 0 10px;
+}
+
+.language a {
+    color: #F54E11;
+}
+
+.language a:hover {
+    text-decoration: underline;
+}
+
+.header h3 {
     color: #ffffff;
 }
 

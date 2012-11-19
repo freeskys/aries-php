@@ -11,46 +11,61 @@ namespace Lib;
 
 class Router {
 
-    /**
-     * @var Controller to be called
-     */
+    //==== Routing Variable ====
     private $controller;
-    /**
-     * @var Action to be called
-     */
     private $action;
-    /**
-     * @var Value passed to action
-     */
     private $value;
-    /**
-     * @var Cache filename
-     */
+
+    //==== Cache Setting ====
     private $cacheFile;
+    private $cacheFolder = 'app/caches/';
+    private $cacheTime = 18000;
+
+    //==== Controller Setting ====
+    private $controller_namespace = 'App\Controllers\\';
+    private $controller_prefix = 'c';
+    private $not_found_controller = 'not_found';
+
+    //==== Other Setting ====
+    private $url_request = 'request';
+    private $url_request_separator = '/';
+    private $routing_class_separator = '#';
 
     /**
      * Setting the variable to process.
      */
     public function __construct() {
-        //Mendapatkan request halaman
-        $request    = isset($_GET['request']) ? $_GET['request'] : null;
-        $split      = explode('/', trim($request, '/'));
-        //Memasukkan data ke dalam variabel
-        $this->controller   = !empty($split[0]) ? filter_var(strtolower($split[0]), FILTER_SANITIZE_STRING) : Config::getConfig('index');
-        $this->action       = !empty($split[1]) ? filter_var(strtolower($split[1]), FILTER_SANITIZE_STRING) : 'index';
-        //@TODO : Filter URL input
-        $this->value        = !empty($split[2]) ? strtolower($split[2]) : null;
+        //Getting page request
+        $request = isset($_GET[$this->url_request]) ? $_GET[$this->url_request] : null;
+
+        //Processing request
+        $parse = explode($this->url_request_separator, $request);
+        $route = @Config::getRouter($parse[0]);
+        //If exist in router configuration
+        if (isset($route)) {
+            //Set controller, action and value
+            $route_split = explode($this->routing_class_separator, $route);
+            $this->controller = $route_split[0];
+            $this->action = $route_split[1];
+            //@TODO : filter URL input
+            $this->value = !empty($parse[1]) ? $parse[1] : null;
+        } else {
+            $split = explode('/', trim($request, '/'));
+            $this->controller = !empty($split[0]) ? filter_var(strtolower($split[0]), FILTER_SANITIZE_STRING) : Config::getRouter('index');
+            $this->action = !empty($split[1]) ? filter_var(strtolower($split[1]), FILTER_SANITIZE_STRING) : 'index';
+            //@TODO : filter URL input
+            $this->value = !empty($split[2]) ? $split[2] : null;
+        }
     }
 
     /**
      * Call the requested controller
      */
     public function route() {
-        //Memanggil controller
-        if (is_callable('App\Controllers\c_'.$this->controller.'::'.$this->action)) {
-            echo call_user_func('App\Controllers\c_'.$this->controller.'::'.$this->action, $this->value);
+        if (is_callable($this->controller_namespace.$this->controller_prefix.'_'.$this->controller.'::'.$this->action)) {
+            echo call_user_func($this->controller_namespace.$this->controller_prefix.'_'.$this->controller.'::'.$this->action, $this->value);
         } else {
-            echo call_user_func('App\Controllers\c_not_found::index');
+            echo call_user_func($this->controller_namespace.$this->controller_prefix.'_'.$this->not_found_controller.'::index');
         }
     }
 
@@ -59,11 +74,10 @@ class Router {
      */
     public function headerCache() {
         $file = $this->controller.'-'.$this->action;
-        $this->cacheFile = 'app\caches\cached-'.$file.'.html';
-        $cacheTime = 18000;
+        $this->cacheFile = $this->cacheFolder.'cached-'.$file.'.html';
 
         //Muat caches jika umurnya lebih muda dari $cacheTime
-        if (file_exists($this->cacheFile) && time() - $cacheTime < filemtime($this->cacheFile)) {
+        if (file_exists($this->cacheFile) && time() - $this->cacheTime < filemtime($this->cacheFile)) {
             echo "<!-- Cached copy, generated ".date('H:i', filemtime($this->cacheFile))." -->\n";
             include($this->cacheFile);
             exit;

@@ -2068,7 +2068,7 @@ class lessc_parser {
 	 * parsed.
 	 *
 	 * This parser is most similar to a recursive descent parser. Single
-	 * functions represent discrete grammatical rules for the language, and
+	 * functions represent discrete grammatical rules for the languages, and
 	 * they are able to capture the text that represents those rules.
 	 *
 	 * Consider the function lessc::keyword(). (all parse functions are
