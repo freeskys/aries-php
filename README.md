@@ -1,7 +1,7 @@
 AriesPHP
 ========
 
-AriesPHP is a Microframework to create MVC based website in PHP.
+AriesPHP is a MVC Framework to create website in PHP.
 AriesPHP designed to be fast, secure, and easy. We work hard to make
 AriesPHP as easy as we can, so everyone can make website without pain.
 
