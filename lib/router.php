@@ -25,6 +25,8 @@ class Router {
     private $controller_namespace = 'App\Controllers\\';
     private $controller_prefix = 'c';
     private $not_found_controller = 'not_found';
+    private $before = 'before';
+    private $after = 'after';
 
     //==== Other Setting ====
     private $url_request = 'request';
@@ -41,20 +43,19 @@ class Router {
         //Processing request
         $parse = explode($this->url_request_separator, $request);
         $route = @Config::getRouter($parse[0]);
+
         //If exist in router configuration
         if (isset($route)) {
             //Set controller, action and value
             $route_split = explode($this->routing_class_separator, $route);
             $this->controller = $route_split[0];
             $this->action = $route_split[1];
-            //@TODO : filter URL input
-            $this->value = !empty($parse[1]) ? $parse[1] : null;
+            $this->value = !empty($parse[1]) ? filter_var($parse[1], FILTER_SANITIZE_STRIPPED) : null;
         } else {
             $split = explode('/', trim($request, '/'));
             $this->controller = !empty($split[0]) ? filter_var(strtolower($split[0]), FILTER_SANITIZE_STRING) : Config::getRouter('index');
             $this->action = !empty($split[1]) ? filter_var(strtolower($split[1]), FILTER_SANITIZE_STRING) : 'index';
-            //@TODO : filter URL input
-            $this->value = !empty($split[2]) ? $split[2] : null;
+            $this->value = !empty($split[2]) ? filter_var($split[2], FILTER_SANITIZE_STRIPPED) : null;
         }
     }
 
@@ -62,10 +63,23 @@ class Router {
      * Call the requested controller
      */
     public function route() {
-        if (is_callable($this->controller_namespace.$this->controller_prefix.'_'.$this->controller.'::'.$this->action)) {
+        //Call before function
+        if (is_callable($this->controller_namespace.$this->controller_prefix.'_'.$this->controller.'::'.$this->before)) {
+            call_user_func($this->controller_namespace.$this->controller_prefix.'_'.$this->controller.'::'.$this->before);
+        }
+
+        //Call main function
+        if (is_callable($this->controller_namespace.$this->controller_prefix.'_'.$this->controller.'::'.$this->action) &&
+            $this->action != 'before' &&
+            $this->action != 'after') {
             echo call_user_func($this->controller_namespace.$this->controller_prefix.'_'.$this->controller.'::'.$this->action, $this->value);
         } else {
             echo call_user_func($this->controller_namespace.$this->controller_prefix.'_'.$this->not_found_controller.'::index');
+        }
+
+        //Call after function
+        if (is_callable($this->controller_namespace.$this->controller_prefix.'_'.$this->controller.'::'.$this->after)) {
+            call_user_func($this->controller_namespace.$this->controller_prefix.'_'.$this->controller.'::'.$this->after);
         }
     }
 
@@ -74,7 +88,7 @@ class Router {
      */
     public function headerCache() {
         $file = $this->controller.'-'.$this->action;
-        $this->cacheFile = $this->cacheFolder.'cached-'.$file.'.html';
+        $this->cacheFile = $this->cacheFolder.'caches-'.$file.'.html';
 
         //Muat caches jika umurnya lebih muda dari $cacheTime
         if (file_exists($this->cacheFile) && time() - $this->cacheTime < filemtime($this->cacheFile)) {

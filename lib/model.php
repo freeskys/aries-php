@@ -26,11 +26,7 @@ class Model extends Connection {
     public function __construct() {
         if (!parent::isConnect()) {
             try {
-                $host = Config::getConfig(Config::$host);
-                $dbName = Config::getConfig(Config::$databaseName);
-                $user = Config::getConfig(Config::$user);
-                $password = Config::getConfig(Config::$password);
-                Connection::init($host, $dbName, $user, $password);
+                Connection::init();
             } catch (\PDOException $ex) {
                 echo 'AriesPHP can\'t connect to database. Please check your database connection.';
             }
@@ -84,10 +80,6 @@ class Model extends Connection {
      * @param $values
      */
     public function save($values) {
-        if (count($values) > count($this->fields)) {
-            //@TODO: Add exception code later.
-            throw New Aries_Exception('Aries Database Exception: Your inputed value is more than the fields');
-        }
         $query = parent::getConnection()->prepare(Query_Builder::insert($this->table, $values));
         if (!$query->execute($values)) {
             $error_info = $query->errorInfo();
@@ -182,7 +174,8 @@ class Model extends Connection {
         //Generate create table query
         $queryCreate = parent::getConnection()->prepare('SHOW CREATE TABLE '.$this->table);
         $queryCreate->execute();
-        $create = $queryCreate->fetch(\PDO::FETCH_BOTH)[1];
+        $_create = $queryCreate->fetch(\PDO::FETCH_BOTH);
+		$create = $_create[1];
 
         //Get all data from database
         $query = $this->getAll();

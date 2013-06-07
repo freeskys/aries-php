@@ -13,6 +13,9 @@ use Lib\Vendor\Mobile_Detect as Agent;
 
 class Utilities {
 
+    //==== Captcha Setting ====
+    public static $session_captcha = 'img_number';
+
     /**
      * Generate permalinks URL.
      *
@@ -32,6 +35,43 @@ class Utilities {
         $clean = preg_replace("/[\/_|+ -]+/", $delimiter, $clean);
 
         return $clean;
+    }
+
+    /**
+     * Clean input to prevent SQL Injection.
+     *
+     * @param $input
+     * @return mixed
+     */
+    function cleanInput($input) {
+        $search = array(
+            '@<script[^>]*?>.*?</script>@si',   // Strip out javascript
+            '@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+            '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
+            '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
+        );
+        $output = preg_replace($search, '', $input);
+        return $output;
+    }
+
+    /**
+     * Get client browser language
+     *
+     * @param $availableLanguages
+     * @param string $default
+     * @return string
+     */
+    function get_client_language($availableLanguages, $default='en') {
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+            $langs=explode(',',$_SERVER['HTTP_ACCEPT_LANGUAGE']);
+            foreach ($langs as $value) {
+                $choice=substr($value,0,2);
+                if(in_array($choice, $availableLanguages)) {
+                    return $choice;
+                }
+            }
+        }
+        return $default;
     }
 
     /**
@@ -97,6 +137,31 @@ class Utilities {
      */
     public static function getBaseUrl() {
         return Config::getConfig(Config::$base);
+    }
+
+    /**
+     * Check if the file is Image.
+     *
+     * @param $img
+     * @return bool
+     */
+    function isImage($img) {
+        if(!getimagesize($img)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Check if inputed string is match captcha.
+     *
+     * @param $input
+     * @return bool
+     */
+    public static function checkCaptcha($input) {
+        session_start();
+        return $_SESSION[self::$session_captcha] == $input;
     }
 
 }

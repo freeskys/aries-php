@@ -60,6 +60,11 @@ if ($argc > 1) {
     } else if ($argv[1] == 'model') {
         createModel($argv[2], $argv[3], $argv[4]);
         fwrite(STDOUT, 'Model m_'.$argv[2].' created successfully');
+    } else {
+        fwrite(STDOUT, "Wrong command\n" );
+        fwrite(STDOUT, "Here the list of command:\n".
+            "1. controller <name>\n".
+            "2. model <table-name> <field-list> <primary-key>\n");
     }
 } else {
     //Write if user didn't specify arguments

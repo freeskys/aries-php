@@ -2,6 +2,9 @@
 use \Lib\Config as Config;
 require_once('lib/vendor/lessc.php');
 
+//Start timer
+$time_start = microtime(true);
+
 //Load all required class
 spl_autoload_register(function ($classname) {
     $filename = $classname.'.php';
@@ -25,6 +28,10 @@ define('IMG_DIR', Config::getConfig('base').'public/img/');
 define('JS_DIR', (__DIR__.'/public/js').DIRECTORY_SEPARATOR);
 define('LESS_DIR', realpath(__DIR__.'/public/less').DIRECTORY_SEPARATOR);
 
+//Set current language
+if (!isset($_SESSION[Config::$lang_session]))
+    $_SESSION[Config::$lang_session] = Config::getConfig(Config::$lang);
+
 //Running the router
 $router = new \Lib\Router();
 
@@ -42,7 +49,7 @@ if (Config::getPlugins('css') == 'lessCSS') {
 }
 
 //Call caches header
-if (Config::getConfig('cache') == 'true') {
+if (Config::getConfig(Config::$cache) == 'true') {
     $router->headerCache();
 }
 
@@ -50,7 +57,14 @@ if (Config::getConfig('cache') == 'true') {
 $router->route();
 
 //Call caches footer
-if (Config::getConfig('cache') == 'true') {
+if (Config::getConfig(Config::$cache) == 'true') {
     $router->footerCache();
 }
+
+//Stop timer
+$time_end = microtime(true);
+$time = $time_end - $time_start;
+
+//Comment below to hide timer
+//echo 'Web executed in '.$time.' seconds';
 ?>

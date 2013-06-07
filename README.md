@@ -11,7 +11,36 @@ Thank you for all contributors. Without your help AriesPHP can't be like this.
 - [Mohammad Andy Nugroho](https://twitter.com/androvnugros)
 - [Moh. Nuruddin Ef.](https://twitter.com/uudshan)
 
+##How to use aries.php CLI
+1. Create controller:
+controller <name>
+Example: php aries.php controller test
+
+2. Create model:
+model <table-name> <field-list> <primary-key>
+Example: php aries.php model test id,name,description id
+Note: <field-list> is separated by comma and may not contain space.
+
+#Features
+- Compress HTML on the fly
+- Combine js and css into one file and compress it
+- Command Line Interface to automatically generate controller and model
+- Built-in multilanguage plugins
+- Built-in LessCSS compiler
+- Autoload js and css
+
 ##Version History
+Version 1.0.8
++ Added combined js and css on the fly
++ Added simple captcha system
++ Added before and after function
++ Added CLI called aries.php
++ Added templating system
++ Added routing system
++ Added option to turn off autoload for css and js
+* Change config.php file
+* Fixed several bugs
+
 Version 1.0.7
 + Added Multilanguage System
 + Added LessCSS Compiler (Using Less Compiler by @moonscript)
@@ -27,9 +56,6 @@ Version 1.0.4
 + New welcome page
 + Added HTML compress option on config
 + Added Logo
-
-Version 1.0.2
-* Fixed several bugs
 
 ##License
 Copyright (C) 2012 Harditya Rahmat Ramadhan

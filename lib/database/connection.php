@@ -9,20 +9,44 @@
 
 namespace Lib\Database;
 
+use Lib\Config;
+use Lib\Aries_Exception as AriesException;
+
 class Connection {
 
     private static $db = null;
 
     /**
      * Make connection to the database.
-     *
-     * @param $host
-     * @param $dbName
-     * @param $user
-     * @param $password
      */
-    public static function init($host, $dbName, $user, $password) {
-        self::$db = new \PDO("mysql:host=$host;dbname=$dbName", $user, $password);
+    public static function init() {
+        $host = Config::getConfig(Config::$host);
+        $port = Config::getConfig(Config::$port);
+        $dbName = Config::getConfig(Config::$databaseName);
+        $user = Config::getConfig(Config::$user);
+        $password = Config::getConfig(Config::$password);
+        $file = Config::getConfig(Config::$file);
+
+        if ('' == $host) {
+            throw new AriesException('Your host config is null.');
+        } else if ('' == $port) {
+            throw new AriesException('Your port config is null.');
+        } else if ('' == $dbName) {
+            throw new AriesException('Your dbName config is null.');
+        } else if ('' == $user) {
+            throw new AriesException('Your user config is null.');
+        }
+
+        if (Config::getConfig(Config::$driver) == Config::$mysql) {
+            self::$db = new \PDO("mysql:host=$host;port=$port;dbname=$dbName", $user, $password);
+        } else if (Config::getConfig(Config::$driver) == Config::$postgree) {
+            self::$db = new \PDO("pgsql:host=$host;port=$port;dbname=$dbName", $user, $password);
+        } else if (Config::getConfig(Config::$driver) == Config::$sqlite) {
+            if ('' == $file) {
+                throw new AriesException('Your file config is null.');
+            }
+            self::$db = new \PDO("sqlite:$file", $user, $password);
+        }
     }
 
     /**

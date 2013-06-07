@@ -8,6 +8,7 @@
         <meta name="description" value="AriesPHP is a MVC framework without the PAIN.">
         <meta name="keyword" value="aries, framework, ariesphp">
 
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
         <link rel="author" href="humans.txt" />
 
         <?= $css ?>
@@ -15,54 +16,48 @@
     </head>
     <body>
         <!-- Header -->
-        <div class="container gradient_black" style="width:100%;">
+        <div class="container header-container" style="width:100%;">
             <div class="container">
-                <div class="minibox_8 header">
+                <div class="minibox_2 language animated bounceIn">
+                    <a href="http://ariesphp.blezcode.com" target="_blank"><?= $visit_ariesphp ?></a>
+                </div>
+                <div class="minibox_2 language animated bounceIn">
+                    <a href="https://github.com/freeskys/aries-php" target="_blank"><?= $lang_fork_github ?></a>
+                </div>
+                <div class="minibox_4 header animated bounceIn">
                     <h3>
                         <img src="<?= IMG_DIR ?>logo-aries.png" alt="Logo"/>
                     </h3>
                 </div>
-                <div class="minibox_3 language push_1">
-                    Language: <a href="<?= $base ?>home/index/en">English</a> | <a href="<?= $base ?>home/index/id">Indonesia</a>
+                <div class="minibox_2 language animated bounceIn">
+                    <?= $view_in ?> <a href="<?= $base ?>home/index/en">English</a>
+                </div>
+                <div class="minibox_2 language animated bounceIn">
+                    <?= $view_in ?> <a href="<?= $base ?>home/index/id">Indonesia</a>
                 </div>
             </div>
         </div>
-        <div class="container gradient_orange" style="width:100%;">
+
+        <div class="container gradient_orange" style="width:100%;height:5px">
             <div class="container">
                 <div class="minibox_12">
                     <br />
                 </div>
             </div>
         </div>
+
         <!-- Content -->
         <div class="container">
             <?= $content ?>
         </div>
         <br />
         <!-- Footer -->
-        <div class="container" id="footerContainer">
+        <div class="container animated fadeInUp" id="footerContainer">
             <div class="container footer">
-                <div class="minibox_4 footer_item">
-                    <h3><?= $lang_contribute ?></h3>
-                    <a href="https://github.com/freeskys/aries-php" target="_blank"><?= $lang_fork_github ?></a>
-                </div>
-                <div class="minibox_4 footer_item">
-                    <h3>Developer</h3>
-                    <a href="https://twitter.com/freeskys">@freeskys</a> - Project Manager and Lead Developer
-                    <a href="https://twitter.com/androvnugros">@androvnugros</a> - Graphic Designer
-                </div>
-                <div class="minibox_4 footer_item">
-                    <h3><?= $lang_framework_included ?></h3>
-                    <a href="https://github.com/uudshan/gemini-css" target="_blank">Minibox System</a> by Moh. Nuruddin Ef.<br />
-                    <a href="http://jquery.com/" target="_blank">jQuery</a> by The jQuery Foundation<br />
-                </div>
-            </div>
-        </div>
-        <div class="container gradient_orange" id="footerContainer2">
-            <div class="container">
-                <div class="minibox_12 copyright">
-                    <br />
-                    Copyright &copy; <?= $current_year ?> Harditya Rahmat Ramadhan | <?= $lang_licensed ?>.
+                <div class="minibox_12 footer_item">
+                    Copyright &copy; <?= $current_year ?>&nbsp;<a href="https://twitter.com/freeskys" target="_blank">Harditya Rahmat Ramadhan</a>.
+                    <?= $designed_by ?>
+                    <a href="https://twitter.com/androvnugros" target="_blank">@androvnugros</a>
                 </div>
             </div>
         </div>
