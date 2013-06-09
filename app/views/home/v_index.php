@@ -7,7 +7,6 @@
 </div>
 <div class="minibox_5 box animated fadeInUp">
     <h3 class="title"><?= $lang_where_to_start ?></h3><br/>
-    <b style="color:#930005">Don't forget</b> to change $base with your website base URL under lib/config.php<br /><br />
     <?= $lang_generated_by ?>:<br/>
 
     <div class="code">

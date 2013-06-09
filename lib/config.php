@@ -46,8 +46,8 @@ class Config {
     public static $config = array(
         //Language. Must same with the name in languages folder. (Ex: en.php)
         'lang'          => 'en',
-        //Base URL
-        'base'          => 'http://localhost/aries/',
+        //Base URL. Leave it blank and AriesPHP will guess it.
+        'base'          => '',
         //Active cache or not
         'cache'         => 'false',
 
@@ -177,6 +177,9 @@ class Config {
      * @return mixed
      */
     public static function getConfig($key) {
+        if ($key == Config::$base && '' == Config::$config[Config::$base]) {
+            Config::$config[Config::$base] = Config::get_base_url();
+        }
         return Config::$config[$key];
     }
 
@@ -198,6 +201,42 @@ class Config {
      */
     public static function isAutoloadExist($key) {
         return in_array($key, Config::$autoload);
+    }
+
+    public static function get_base_url() {
+        /* First we need to get the protocol the website is using */
+        $protocol = strtolower(substr($_SERVER["SERVER_PROTOCOL"], 0, 5)) == 'https://' ? 'https://' : 'http://';
+
+        /* returns /myproject/index.php */
+        $path = $_SERVER['PHP_SELF'];
+
+        /*
+         * returns an array with:
+         * Array (
+         *  [dirname] => /myproject/
+         *  [basename] => index.php
+         *  [extension] => php
+         *  [filename] => index
+         * )
+         */
+        $path_parts = pathinfo($path);
+        $directory = $path_parts['dirname'];
+        /*
+         * If we are visiting a page off the base URL, the dirname would just be a "/",
+         * If it is, we would want to remove this
+         */
+        $directory = ($directory == "/") ? "" : $directory;
+
+        /* Returns localhost OR mysite.com */
+        $host = $_SERVER['HTTP_HOST'];
+
+        /*
+         * Returns:
+         * http://localhost/mysite
+         * OR
+         * https://mysite.com
+         */
+        return $protocol.$host.$directory.'/';
     }
 
 }
