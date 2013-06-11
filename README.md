@@ -27,9 +27,20 @@ Note: <field-list> is separated by comma and may not contain space.
 - Command Line Interface to automatically generate controller and model
 - Built-in multilanguage plugins
 - Built-in LessCSS compiler
+- PHP Active Record
+- Support Smarty
 - Autoload js and css
 
 ##Version History
+Version 1.0.9
++ Added Auto Guess Base URL
++ Added Bootstrap Form Builder
++ Added Bootstrap Table Builder
++ Added PHP Active Record 1.0.0
+* Update Less Compiler to 0.3.9
+* Update Mobile Detect to 2.6.2
+* Improve cache function
+
 Version 1.0.8
 + Added combined js and css on the fly
 + Added simple captcha system
@@ -58,7 +69,7 @@ Version 1.0.4
 + Added Logo
 
 ##License
-Copyright (C) 2012 Harditya Rahmat Ramadhan
+Copyright (C) 2013 AriesPHP Team
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the �Software�), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 

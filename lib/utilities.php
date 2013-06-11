@@ -106,7 +106,7 @@ class Utilities {
      * @return bool
      */
     public static function isDesktop() {
-        $agent = new Agent();
+        $agent = new Agent;
         return (!$agent->isTablet() && !$agent->isMobile());
     }
 
@@ -116,7 +116,7 @@ class Utilities {
      * @return bool
      */
     public static function isTablet() {
-        $agent = new Agent();
+        $agent = new Agent;
         return $agent->isTablet();
     }
 
@@ -126,7 +126,7 @@ class Utilities {
      * @return bool
      */
     public static function isMobile() {
-        $agent = new Agent();
+        $agent = new Agent;
         return $agent->isTablet();
     }
 

@@ -12,71 +12,58 @@ namespace Lib;
 class Config {
 
     //==== Website configuration constanta ====
-    public static $lang             = 'lang';
-    public static $lang_session     = 'lang';
-    public static $base             = 'base';
-    public static $cache            = 'cache';
+    public static $lang                 = 'lang';
+    public static $lang_session         = 'lang';
+    public static $base                 = 'base';
+    public static $cache                = 'cache';
 
     //==== Database configuration constanta ====
-    public static $driver           = 'driver';
-    public static $file             = 'file';
-    public static $host             = 'host';
-    public static $port             = 'port';
-    public static $databaseName     = 'databaseName';
-    public static $user             = 'user';
-    public static $password         = 'password';
-
-    //==== Driver constanta ====
-    public static $mysql            = 'mysql';
-    public static $postgree         = 'postgree';
-    public static $sqlite           = 'sqlite';
+    public static $database             = 'database';
+    public static $default_connection   = 'default_connection';
 
     //==== Plugins constanta ====
-    public static $htmlCompress     = 'htmlCompress';
-    public static $combineCss       = 'combineCss';
-    public static $combineJs        = 'combineJs';
+    public static $htmlCompress         = 'htmlCompress';
+    public static $combineCss           = 'combineCss';
+    public static $combineJs            = 'combineJs';
 
     //==== Autoload constanta ====
-    public static $autoload_css     = 'css';
-    public static $autoload_js      = 'js';
+    public static $autoload_css         = 'css';
+    public static $autoload_js          = 'js';
+
+    //==== Database Standart constanta ====
+    public static $development          = 'development';
+    public static $production           = 'production';
 
     //==== Security configuration constanta ====
     public static $salt = 'salt';
 
     public static $config = array(
         //Language. Must same with the name in languages folder. (Ex: en.php)
-        'lang'          => 'en',
+        'lang'                  => 'en',
         //Base URL. Leave it blank and AriesPHP will guess it.
-        'base'          => '',
+        'base'                  => '',
         //Active cache or not
-        'cache'         => 'false',
+        'cache'                 => 'false',
 
-        //Database configuration
-        /******************************
-         * Database Driver List:
-         *
-         * - mysql
-         * - postgree
-         *****************************/
-        'driver'        => 'mysql',
-
-        //==== Input this if you use SQLite database ====
-        'file'          => '',
-        'host'          => 'localhost',
-        /******************************
-         * Default port for database:
-         *
-         * - mysql      --> 3306
-         * - postgree   --> 5432
-         *****************************/
-        'port'          => '3306',
-
-        'databaseName'  => 'aries',
-        'user'          => 'root',
-        'password'      => '',
+        //Used database configuration
+        'database'              => 'development',
+        'default_connection'    => 'development',
 		
 		//==== AriesLogin configuration ====
-        'salt'          => 'LAKSJD*(@U9hsaD',
+        'salt'                  => 'LAKSJD*(@U9hsaD',
+    );
+
+    public static $databases = array(
+        /**
+         * Example of Database Configuration:
+         *
+         * 'mysql'         => 'mysql://username:password@localhost/dbName'
+         * 'pgsql'         => 'pgsql://username:password@localhost/dbName'
+         * 'sqlite'        => 'sqlite://my_database.db'
+         * 'oci'           => 'oci://username:passsword@localhost/xe'
+         */
+        'development'   => 'mysql://root@localhost/test',
+        'production'    => 'mysql://root:db_password@localhost/production_db',
     );
 
     /**
@@ -149,6 +136,10 @@ class Config {
         'css',
         'js',
     );
+
+    public static function getDatabases() {
+        return Config::$databases;
+    }
 
     /**
      * Get plugins.

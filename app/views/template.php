@@ -55,7 +55,7 @@
         <div class="container animated fadeInUp" id="footerContainer">
             <div class="container footer">
                 <div class="minibox_12 footer_item">
-                    Copyright &copy; <?= $current_year ?>&nbsp;<a href="https://twitter.com/freeskys" target="_blank">Harditya Rahmat Ramadhan</a>.
+                    Copyright &copy; <?= $current_year ?>&nbsp;<a href="https://twitter.com/freeskys" target="_blank">AriesPHP Team</a>.
                     <?= $designed_by ?>
                     <a href="https://twitter.com/androvnugros" target="_blank">@androvnugros</a>
                 </div>

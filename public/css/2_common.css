@@ -19,8 +19,12 @@ a {
     text-decoration: none;
 }
 
+legend {
+    color: #ffffff;
+}
+
 .hello {
-    font-size: 6em;
+    font-size: 4em;
 }
 
 #horay {
@@ -56,7 +60,7 @@ a {
 .box {
     background-color: #34495e;
     padding: 15px;
-    height: 180px;
+    height: 400px;
     color: #000000;
 }
 

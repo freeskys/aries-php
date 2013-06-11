@@ -1,6 +1,6 @@
 <div class="minibox_12" id="content">
     <h3 id="horay" class="animated fadeInLeftBig">
-        <span class="hello"><?= $horay ?>.</span><br/>
+        <span class="hello"><?= $horay ?>.</span><br/><br/>
         <?= $lang_success_1 ?>.<br/>
         <?= $lang_success_2 ?>.<br />
     </h3>
@@ -16,7 +16,7 @@
 </div>
 <div class="minibox_1">&nbsp;</div>
 <div class="minibox_5 box animated fadeInUp">
-    <h3 class="title"><?= $lang_where_to_look ?></h3><br/>
-    <a href="#">MVC Basic (TODO)</a><br/>
-    <a href="#">Insert Javascript, CSS, and Image (TODO)</a>
+    <h3 class="title"><?= $built_with ?></h3><br/>
+    <?= $form ?>
+    <?= $table ?>
 </div>

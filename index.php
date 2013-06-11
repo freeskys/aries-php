@@ -1,6 +1,8 @@
 <?php
 use \Lib\Config as Config;
+use \ActiveRecord\Config as AR_Config;
 require_once('lib/vendor/lessc.php');
+require_once('lib/active_record.php');
 
 //Start timer
 $time_start = microtime(true);
@@ -52,6 +54,12 @@ if (Config::getPlugins('css') == 'lessCSS') {
 if (Config::getConfig(Config::$cache) == 'true') {
     $router->headerCache();
 }
+
+AR_Config::initialize(function ($cfg) {
+    $cfg->set_model_directory('app/models');
+    $cfg->set_connections(Config::getDatabases());
+    $cfg->set_default_connection(Config::getConfig(Config::$default_connection));
+});
 
 //Call controller
 $router->route();

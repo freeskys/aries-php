@@ -13,4 +13,5 @@ $lang['lang_framework_included'] = 'Framework yang ada di dalam AriesPHP';
 $lang['view_in'] = 'Bahasa';
 $lang['visit_ariesphp'] = 'Kunjungi AriesPHP';
 $lang['designed_by'] = 'Logo AriesPHP di desain oleh';
+$lang['built_with'] = 'Dibuat dengan Form Generator';
 ?>
