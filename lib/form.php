@@ -7,7 +7,7 @@
  * Thanks for using AriesPHP
  *****************************************************************/
 
-namespace Lib;
+namespace lib;
 
 
 class Form {

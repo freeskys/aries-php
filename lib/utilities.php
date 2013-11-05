@@ -7,9 +7,9 @@
  * Thanks for using AriesPHP
  *****************************************************************/
 
-namespace Lib;
+namespace lib;
 
-use Lib\Vendor\Mobile_Detect as Agent;
+use lib\Vendor\Mobile_Detect as Agent;
 
 class Utilities {
 

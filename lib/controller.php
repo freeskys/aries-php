@@ -7,7 +7,9 @@
  * Thanks for using AriesPHP
  *****************************************************************/
 
-namespace Lib;
+namespace lib;
+
+use lib\vendor\markdown\Markdown;
 
 class Controller extends Utilities {
 
@@ -48,10 +50,15 @@ class Controller extends Utilities {
      *
      * @param $file
      * @param null $data
+     * @throws Aries_Exception
      */
-    public function __construct($file, $data = null) {
+    public function __construct($file, $data = null, $is_markdown) {
         //Set path to the view file
-        $file_location = VIEWS_DIR.$file.'.'.$this->view_extension;
+        if ($is_markdown) {
+            $file_location = VIEWS_DIR.$file.'.md';
+        } else {
+            $file_location = VIEWS_DIR.$file.'.'.$this->view_extension;
+        }
         $this->path = realpath($file_location);
         //Check if file is exist
         if (!is_file($this->path)) {
@@ -70,30 +77,41 @@ class Controller extends Utilities {
         $data[$this->current_year] = Controller::getCurrentYear();
         extract($data);
         extract($lang);
-        require_once($this->path);
+        if ($is_markdown) {
+            echo $this->parseMarkdown($this->path);
+        } else {
+            require_once($this->path);
+        }
         $content .= ob_get_clean();
 
         //Extracting the data to template
         ob_start();
 
         //Process auto combine and autoload
-        if (Config::getPlugins(Config::$combineCss) == 'true' && Config::isAutoloadExist(Config::$autoload_css)) {
-            Controller::combineCss();
-            $t[$this->css] = '<link href="'.Config::getConfig(Config::$base).$this->caches_folder.$this->combined_css_filename.'" type="text/css" rel="stylesheet"/>';
-        } else if (Config::isAutoloadExist(Config::$autoload_css)) {
-            $t[$this->css] = Controller::cssBuilder();
+        $filename_css   = '../public/caches/css.css';
+        $filename_js    = '../public/caches/js.js';
+        if (Config::getConfig(Config::$cache) == 'true' && file_exists($filename_css) && file_exists($filename_js)) {
+            //Do Nothing
         } else {
-            $t[$this->css] = '';
-        }
+            //Process auto combine and autoload for CSS
+            if (Config::getPlugins(Config::$combineCss) == 'true' && Config::isAutoloadExist(Config::$autoload_css)) {
+                Controller::combineCss();
+                $t[$this->css] = '<link href="'.Config::getConfig(Config::$base).$this->caches_folder.$this->combined_css_filename.'" type="text/css" rel="stylesheet"/>';
+            } else if (Config::isAutoloadExist(Config::$autoload_css)) {
+                $t[$this->css] = Controller::cssBuilder();
+            } else {
+                $t[$this->css] = '';
+            }
 
-        //Process auto combine and autoload
-        if (Config::getPlugins(Config::$combineJs) == 'true' && Config::isAutoloadExist(Config::$autoload_js)) {
-            Controller::combineJs();
-            $t[$this->js] = '<script src="'.Config::getConfig(Config::$base).$this->caches_folder.$this->combined_js_filename.'" type="text/javascript"></script>';
-        } else if (Config::isAutoloadExist(Config::$autoload_js)) {
-            $t[$this->js] = Controller::jsBuilder();
-        } else {
-            $t[$this->js] = '';
+            //Process auto combine and autoload for JS
+            if (Config::getPlugins(Config::$combineJs) == 'true' && Config::isAutoloadExist(Config::$autoload_js)) {
+                Controller::combineJs();
+                $t[$this->js] = '<script src="'.Config::getConfig(Config::$base).$this->caches_folder.$this->combined_js_filename.'" type="text/javascript"></script>';
+            } else if (Config::isAutoloadExist(Config::$autoload_js)) {
+                $t[$this->js] = Controller::jsBuilder();
+            } else {
+                $t[$this->js] = '';
+            }
         }
 
         //Insert content into template
@@ -158,12 +176,26 @@ class Controller extends Utilities {
      *
      * @param $file
      * @param null $data
-     * @param null $language
-     * @return Controller|mixed|string
+     * @return string
      */
-    public static function view($file, $data = null, $language = null) {
-        $controller = new Controller($file, $data, $language);
+    public static function view($file, $data = null) {
+        $controller = new Controller($file, $data, false);
+
         return $controller->result;
+    }
+
+    public static function markdown($file, $data = null) {
+        $controller = new Controller($file, $data, true);
+
+        return $controller->result;
+    }
+
+    public static function parseMarkdown($file) {
+        $fh         = fopen($file, 'r');
+        $content    = fread($fh, filesize($file));
+        fclose($fh);
+
+        return Markdown::defaultTransform($content);
     }
 
     /**

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace app\controllers;
 
-use Lib\Controller as Controller;
+use lib\Controller as Controller;
 
-class C_Not_Found extends Controller {
+class c_not_found extends Controller {
 
     public static function index() {
         return Controller::view('home/v_notfound');

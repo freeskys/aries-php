@@ -9,112 +9,50 @@
 }
 
 body {
-    font-family: Verdana, sans-serif;
-    font-size: 0.9em;
-    background-color: #2c3e50;
+    font-family: 'Manteka', sans-serif;
+    font-size: 1.2em;
+    background-color: #e67e22;
     color: #ffffff;
+}
+
+header {
+    padding-top: 100px;
 }
 
 a {
     text-decoration: none;
 }
 
-legend {
-    color: #ffffff;
-}
-
-.hello {
-    font-size: 4em;
-}
-
 #horay {
-    padding: 10px 0 40px 0;
-    font-family: 'Nexa', Verdana, sans-serif;
+    font-size: 2em;
 }
 
-.header-container {
-    background-color: #2c3e50;
-    color: #ffffff;
+.horay {
+    font-family: 'Nexa', sans-serif;
+    margin-top: 100px;
+    line-height: 30px;
 }
 
-.header {
-    color: #2c3e50;
-    padding: 15px 0 0 0;
-    text-align: center;
-}
-
-.language {
-    color: #1d1d1d;
-    padding: 73px 0 0 0;
-    text-align: center;
-    font-family: 'Manteka', Verdana, sans-serif;
-}
-
-.language a {
-    color: #ffffff;
-    font-family: 'Manteka', Verdana, sans-serif;
-    padding-right: 5px;
-    border-right: 5px solid #d35400;
-}
-
-.box {
-    background-color: #34495e;
-    padding: 15px;
-    height: 400px;
-    color: #000000;
-}
-
-.box a {
-    color: #ffffff;
-}
-
-.header h3 {
-    color: #ffffff;
-}
-
-#content {
-    text-align: center;
+.desc {
+    margin-top: 100px;
 }
 
 .code {
-	padding-top: 10px;
+    margin-left: 80px;
+    line-height: 30px;
+    font-size: 1.5em;
 }
 
-#footerContainer {
-    width: 100%;
-    height: auto;
-    font-family: 'Nexa', Verdana, sans-serif;
+footer {
+    margin-top: 100px;
+    padding: 30px;
+    background: #d35400;
 }
 
-#footerContainer2 {
-    width: 100%;
-    height: 5px;
-}
-
-.title {
-    margin: 0;
-    padding: 10px 0;
-    text-align: center;
-    background-color: #2c3e50;
+footer a {
     color: #ffffff;
-    border-right: 5px solid #d35400;
 }
 
-.footer {
-    padding: 15px;
-}
-
-.item {
-    text-align: left;
-}
-
-.footer_item {
-    font-size: 0.7em;
-    color: #D8D8D8;
-}
-
-.footer_item a {
-    color: #949494;
-    text-decoration: none;
-    font-size: 1em;
+footer a:hover {
+    color: #ffffff;
 }

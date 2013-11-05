@@ -3,7 +3,7 @@ function createController($name) {
     $classname = strtoupper(substr($name, 0, 1)).strtolower(substr($name, 1, strlen($name)));
     $controller = "<?php \n\n";
     $controller .= "namespace App\Controllers;\n\n";
-    $controller .= "use Lib\Controller as Controller;\n\n";
+    $controller .= "use lib\Controller as Controller;\n\n";
     $controller .= "class C_".$classname." extends Controller { \n\n";
     $controller .= "\tpublic static function index() { \n";
     $controller .= "\t\treturn Controller::view('".strtolower($name)."/v_index');\n";
@@ -20,7 +20,7 @@ function createModel($name, $field, $primary) {
     $classname = strtoupper(substr($name, 0, 1)).strtolower(substr($name, 1, strlen($name)));
     $model = "<?php\n\n";
     $model .= "namespace App\Models;\n\n";
-    $model .= "class M_".$classname." extends \Lib\Model {\n\n";
+    $model .= "class M_".$classname." extends \lib\Model {\n\n";
     $model .= "\tvar ".'$table'." = '".$name."';\n";
     $model .= "\tvar ".'$fields'." = Array(\n";
     $fields = explode(',', $field);

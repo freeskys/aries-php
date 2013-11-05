@@ -7,10 +7,10 @@
  * Thanks for using AriesPHP
  *****************************************************************/
 
-namespace Lib\Database;
+namespace lib\Database;
 
-use Lib\Config;
-use Lib\Aries_Exception as AriesException;
+use lib\Config;
+use lib\Aries_Exception as AriesException;
 
 class Connection {
 

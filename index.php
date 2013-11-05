@@ -1,11 +1,10 @@
 <?php
-use \Lib\Config as Config;
-use \ActiveRecord\Config as AR_Config;
 require_once('lib/vendor/lessc.php');
 require_once('lib/active_record.php');
+require_once('lib/active_record/Config.php');
 
-//Start timer
-$time_start = microtime(true);
+use lib\Config as Config;
+use ActiveRecord\Config as AR_Config;
 
 //Load all required class
 spl_autoload_register(function ($classname) {
@@ -13,6 +12,9 @@ spl_autoload_register(function ($classname) {
     if (file_exists($filename))
         require_once($filename);
 });
+
+//Start timer
+$time_start = microtime(true);
 
 //Show error or not
 error_reporting(-1);
@@ -35,7 +37,7 @@ if (!isset($_SESSION[Config::$lang_session]))
     $_SESSION[Config::$lang_session] = Config::getConfig(Config::$lang);
 
 //Running the router
-$router = new \Lib\Router();
+$router = new \lib\Router();
 
 //Compiling dynamic stylesheet
 if (Config::getPlugins('css') == 'lessCSS') {

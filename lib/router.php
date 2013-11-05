@@ -7,7 +7,7 @@
  * Thanks for using AriesPHP
  *****************************************************************/
 
-namespace Lib;
+namespace lib;
 
 class Router {
 
@@ -22,7 +22,7 @@ class Router {
     private $cacheTime = 18000;
 
     //==== Controller Setting ====
-    private $controller_namespace = 'App\Controllers\\';
+    private $controller_namespace = 'app\controllers\\';
     private $controller_prefix = 'c';
     private $not_found_controller = 'not_found';
     private $before = 'before';

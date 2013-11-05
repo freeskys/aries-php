@@ -7,10 +7,10 @@
  * Thanks for using AriesPHP
  *****************************************************************/
 
-namespace Lib\Login;
+namespace lib\Login;
 
-use Lib\Login\m_Login as Login;
-use Lib\Config as Config;
+use lib\Login\m_Login as Login;
+use lib\Config as Config;
 
 class Aries_Login {
 

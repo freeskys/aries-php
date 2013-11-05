@@ -32,7 +32,7 @@
  * @version     2.6.2
  */
 
-namespace Lib\Vendor;
+namespace lib\Vendor;
 
 class Mobile_Detect {
 

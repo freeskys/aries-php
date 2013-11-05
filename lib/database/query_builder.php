@@ -1,6 +1,6 @@
 <?php
 
-namespace Lib\Database;
+namespace lib\Database;
 
 class Query_Builder {
 

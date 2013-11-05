@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Controllers;
+namespace app\controllers;
 
-use App\Models\Test;
-use Lib\Controller as Controller;
-use Lib\Form;
-use Lib\Table;
+use app\models\Test;
+use lib\Controller as Controller;
+use lib\Form;
+use lib\Table;
 
-class C_Home extends Controller {
+class c_home extends Controller {
 
     public static function before() {
 
@@ -28,6 +28,7 @@ class C_Home extends Controller {
             'table' => self::_table_user(),
         );
         return Controller::view('home/v_index', $data);
+//        return Controller::markdown('home/README');
     }
 
     private static function _form_signup() {

@@ -7,9 +7,9 @@
  * Thanks for using AriesPHP
  *****************************************************************/
 
-namespace Lib\Login;
+namespace lib\Login;
 
-class m_Login extends \Lib\Model {
+class m_Login extends \lib\Model {
 
     var $table = 'login';
     var $field = Array(

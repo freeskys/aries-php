@@ -7,7 +7,7 @@
  * Thanks for using AriesPHP
  *****************************************************************/
 
-namespace Lib;
+namespace lib;
 
 class Config {
 
@@ -99,7 +99,7 @@ class Config {
          * true
          * false
          */
-        'htmlCompress'  => 'true',
+        'htmlCompress'  => 'false',
 
         /**
          * Combine CSS files into one file and save it to caches folder under public.

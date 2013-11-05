@@ -1,14 +1,14 @@
 AriesPHP
 ========
 
-AriesPHP is a MVC Framework to create website in PHP.
+AriesPHP is a MVC Framework to create simple website in PHP.
 AriesPHP designed to be fast, secure, and easy. We work hard to make
 AriesPHP as easy as we can, so everyone can make website without pain.
 
 Thank you for all contributors. Without your help AriesPHP can't be like this.
 
 ##Contributors
-- [Mohammad Andy Nugroho](https://twitter.com/androvnugros)
+- [Mohammad Andy Nugroho](https://twitter.com/androvnugros) for the great Aries PHP logo
 - [Moh. Nuruddin Ef.](https://twitter.com/uudshan)
 
 ##How to use aries.php CLI
@@ -21,6 +21,10 @@ model <table-name> <field-list> <primary-key>
 Example: php aries.php model test id,name,description id
 Note: <field-list> is separated by comma and may not contain space.
 
+##PHP Active Record
+AriesPHP using PHP Active Record [PHP Active Record](http://www.phpactiverecord.org/).
+You can see the documentation here. [PHP Active Record Guides](http://www.phpactiverecord.org/projects/main/wiki)
+
 #Features
 - Compress HTML on the fly
 - Combine js and css into one file and compress it
@@ -28,10 +32,21 @@ Note: <field-list> is separated by comma and may not contain space.
 - Built-in multilanguage plugins
 - Built-in LessCSS compiler
 - PHP Active Record
-- Support Smarty
 - Autoload js and css
+- Markdown Parser
+- Form Builder (Still in Development)
+- Table Builder (Still in Development)
+
+#Requirement
+- PHP 5.3+
 
 ##Version History
+Version 1.1 BETA
++ Added Form Builder
++ Added Table Builder
++ Added Markdown Parser
+* Fixed several bugs
+
 Version 1.0.9
 + Added Auto Guess Base URL
 + Added Bootstrap Form Builder

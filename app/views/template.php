@@ -11,55 +11,50 @@
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
         <link rel="author" href="humans.txt" />
 
-        <?= $css ?>
-        <?= $js ?>
+        <?php echo $css ?>
+        <?php echo $js ?>
     </head>
     <body>
-        <!-- Header -->
-        <div class="container header-container" style="width:100%;">
+        <header>
             <div class="container">
-                <div class="minibox_2 language animated bounceIn">
-                    <a href="http://ariesphp.blezcode.com" target="_blank"><?= $visit_ariesphp ?></a>
-                </div>
-                <div class="minibox_2 language animated bounceIn">
-                    <a href="https://github.com/freeskys/aries-php" target="_blank"><?= $lang_fork_github ?></a>
-                </div>
-                <div class="minibox_4 header animated bounceIn">
-                    <h3>
-                        <img src="<?= IMG_DIR ?>logo-aries.png" alt="Logo"/>
-                    </h3>
-                </div>
-                <div class="minibox_2 language animated bounceIn">
-                    <?= $view_in ?> <a href="<?= $base ?>home/index/en">English</a>
-                </div>
-                <div class="minibox_2 language animated bounceIn">
-                    <?= $view_in ?> <a href="<?= $base ?>home/index/id">Indonesia</a>
+                <div class="row">
+                    <div class="col-lg-12 text-center animated fadeInUp">
+                        <img src="<?php echo IMG_DIR ?>logo-aries.png" alt="Logo"/>
+                    </div>
                 </div>
             </div>
-        </div>
+        </header>
 
-        <div class="container gradient_orange" style="width:100%;height:5px">
-            <div class="container">
-                <div class="minibox_12">
-                    <br />
-                </div>
-            </div>
-        </div>
-
-        <!-- Content -->
         <div class="container">
-            <?= $content ?>
+            <?php echo $content ?>
         </div>
-        <br />
-        <!-- Footer -->
-        <div class="container animated fadeInUp" id="footerContainer">
-            <div class="container footer">
-                <div class="minibox_12 footer_item">
-                    Copyright &copy; <?= $current_year ?>&nbsp;<a href="https://twitter.com/freeskys" target="_blank">AriesPHP Team</a>.
-                    <?= $designed_by ?>
-                    <a href="https://twitter.com/androvnugros" target="_blank">@androvnugros</a>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <b>Links</b>
+                        <ul class="list-unstyled">
+                            <li><a href="http://ariesphp.blezcode.com" target="_blank"><?php echo $visit_ariesphp ?></a></li>
+                            <li><a href="https://github.com/freeskys/aries-php"
+                                   target="_blank"><?php echo $lang_fork_github ?></a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6">
+                        <b>Language</b>
+                        <ul class="list-unstyled">
+                            <li><a href="<?php echo $base ?>home/index/en">English</a></li>
+                            <li><a href="<?php echo $base ?>home/index/id">Indonesia</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-3">
+                        Copyright &copy; <?php echo $current_year ?>&nbsp;<a href="https://twitter.com/freeskys"
+                                                                             target="_blank">@freeskys</a><br />
+                        <?php echo $designed_by ?>
+                        <a href="https://twitter.com/androvnugros" target="_blank">@androvnugros</a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </footer>
     </body>
 </html>
