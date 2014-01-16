@@ -1,6 +1,8 @@
 AriesPHP
 ========
 
+# This Framework is not maintained anymore.
+
 AriesPHP is a MVC Framework to create simple website in PHP.
 AriesPHP designed to be fast, secure, and easy. We work hard to make
 AriesPHP as easy as we can, so everyone can make website without pain.
